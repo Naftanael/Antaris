@@ -1,0 +1,372 @@
+{
+  "description": "Antaris Agent Dynamics Flow",
+  "name": "Antaris Dynamics",
+  "nodes": [
+    {
+      "id": "user_input",
+      "type": "chat_input",
+      "data": {
+        "label": "User Request",
+        "node_type": "chat_input"
+      },
+      "position": {
+        "x": 0,
+        "y": 200
+      }
+    },
+    {
+      "id": "classifier",
+      "type": "agent_node",
+      "data": {
+        "label": "Request Classifier (GEMINI.md)",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 200,
+        "y": 200
+      }
+    },
+    {
+      "id": "socratic_gate",
+      "type": "logic_node",
+      "data": {
+        "label": "\ud83d\uded1 Socratic Gate",
+        "node_type": "logic_node",
+        "description": "3 Strategic Questions"
+      },
+      "position": {
+        "x": 400,
+        "y": 200
+      }
+    },
+    {
+      "id": "project_planner",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83e\udd16 Project Planner",
+        "node_type": "agent_node",
+        "description": "Phase 1-3: Analysis & Planning"
+      },
+      "position": {
+        "x": 600,
+        "y": 200
+      }
+    },
+    {
+      "id": "plan_file",
+      "type": "document_node",
+      "data": {
+        "label": "{task-slug}.md",
+        "node_type": "document_node"
+      },
+      "position": {
+        "x": 800,
+        "y": 200
+      }
+    },
+    {
+      "id": "orchestrator",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83e\udd16 Orchestrator",
+        "node_type": "agent_node",
+        "description": "Coordination & Synthesis"
+      },
+      "position": {
+        "x": 1000,
+        "y": 200
+      }
+    },
+    {
+      "id": "cat_frontend_ui",
+      "type": "group_node",
+      "data": {
+        "label": "\ud83d\udce6 Frontend/UI",
+        "node_type": "group_node"
+      },
+      "position": {
+        "x": 1300,
+        "y": 0
+      }
+    },
+    {
+      "id": "agent_frontend_specialist",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 frontend-specialist",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 0
+      }
+    },
+    {
+      "id": "agent_mobile_developer",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 mobile-developer",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 100
+      }
+    },
+    {
+      "id": "cat_backend_db",
+      "type": "group_node",
+      "data": {
+        "label": "\ud83d\udce6 Backend/DB",
+        "node_type": "group_node"
+      },
+      "position": {
+        "x": 1300,
+        "y": 300
+      }
+    },
+    {
+      "id": "agent_backend_specialist",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 backend-specialist",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 300
+      }
+    },
+    {
+      "id": "agent_database_architect",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 database-architect",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 400
+      }
+    },
+    {
+      "id": "cat_security_audit",
+      "type": "group_node",
+      "data": {
+        "label": "\ud83d\udce6 Security/Audit",
+        "node_type": "group_node"
+      },
+      "position": {
+        "x": 1300,
+        "y": 600
+      }
+    },
+    {
+      "id": "agent_security_auditor",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 security-auditor",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 600
+      }
+    },
+    {
+      "id": "agent_penetration_tester",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 penetration-tester",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 700
+      }
+    },
+    {
+      "id": "cat_testing_qa",
+      "type": "group_node",
+      "data": {
+        "label": "\ud83d\udce6 Testing/QA",
+        "node_type": "group_node"
+      },
+      "position": {
+        "x": 1300,
+        "y": 900
+      }
+    },
+    {
+      "id": "agent_test_engineer",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 test-engineer",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 900
+      }
+    },
+    {
+      "id": "agent_qa_automation_engineer",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 qa-automation-engineer",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 1000
+      }
+    },
+    {
+      "id": "cat_devops_performance",
+      "type": "group_node",
+      "data": {
+        "label": "\ud83d\udce6 DevOps/Performance",
+        "node_type": "group_node"
+      },
+      "position": {
+        "x": 1300,
+        "y": 1200
+      }
+    },
+    {
+      "id": "agent_devops_engineer",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 devops-engineer",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 1200
+      }
+    },
+    {
+      "id": "agent_performance_optimizer",
+      "type": "agent_node",
+      "data": {
+        "label": "\ud83d\udc64 performance-optimizer",
+        "node_type": "agent_node"
+      },
+      "position": {
+        "x": 1500,
+        "y": 1300
+      }
+    },
+    {
+      "id": "validation",
+      "type": "script_node",
+      "data": {
+        "label": "\u2705 Phase X (checklist.py)",
+        "node_type": "script_node"
+      },
+      "position": {
+        "x": 1800,
+        "y": 200
+      }
+    },
+    {
+      "id": "feedback_loop",
+      "type": "logic_node",
+      "data": {
+        "label": "\ud83d\udd04 Feedback Loop",
+        "node_type": "logic_node"
+      },
+      "position": {
+        "x": 1800,
+        "y": 400
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_user_input_classifier",
+      "source": "user_input",
+      "target": "classifier"
+    },
+    {
+      "id": "edge_classifier_socratic_gate",
+      "source": "classifier",
+      "target": "socratic_gate"
+    },
+    {
+      "id": "edge_socratic_gate_project_planner",
+      "source": "socratic_gate",
+      "target": "project_planner"
+    },
+    {
+      "id": "edge_project_planner_plan_file",
+      "source": "project_planner",
+      "target": "plan_file"
+    },
+    {
+      "id": "edge_plan_file_orchestrator",
+      "source": "plan_file",
+      "target": "orchestrator"
+    },
+    {
+      "id": "edge_orchestrator_cat_frontend_ui",
+      "source": "orchestrator",
+      "target": "cat_frontend_ui"
+    },
+    {
+      "id": "edge_orchestrator_cat_backend_db",
+      "source": "orchestrator",
+      "target": "cat_backend_db"
+    },
+    {
+      "id": "edge_orchestrator_cat_security_audit",
+      "source": "orchestrator",
+      "target": "cat_security_audit"
+    },
+    {
+      "id": "edge_orchestrator_cat_testing_qa",
+      "source": "orchestrator",
+      "target": "cat_testing_qa"
+    },
+    {
+      "id": "edge_orchestrator_cat_devops_performance",
+      "source": "orchestrator",
+      "target": "cat_devops_performance"
+    },
+    {
+      "id": "edge_cat_frontend_ui_validation",
+      "source": "cat_frontend_ui",
+      "target": "validation"
+    },
+    {
+      "id": "edge_cat_backend_db_validation",
+      "source": "cat_backend_db",
+      "target": "validation"
+    },
+    {
+      "id": "edge_cat_security_audit_validation",
+      "source": "cat_security_audit",
+      "target": "validation"
+    },
+    {
+      "id": "edge_cat_testing_qa_validation",
+      "source": "cat_testing_qa",
+      "target": "validation"
+    },
+    {
+      "id": "edge_cat_devops_performance_validation",
+      "source": "cat_devops_performance",
+      "target": "validation"
+    },
+    {
+      "id": "edge_validation_feedback_loop",
+      "source": "validation",
+      "target": "feedback_loop"
+    },
+    {
+      "id": "edge_feedback_loop_orchestrator",
+      "source": "feedback_loop",
+      "target": "orchestrator"
+    }
+  ]
+}

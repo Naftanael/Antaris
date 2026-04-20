@@ -1,0 +1,216 @@
+# Global Agent Orchestrator
+
+Um orquestrador de agentes modular e extensível construído em Python. Ele utiliza um sistema de descoberta automática de habilidades (skills) para expandir suas capacidades dinamicamente.
+
+## 🌟 Funcionalidades
+
+- **Descoberta Automática**: Adicione novos arquivos em `skills/` e eles serão carregados automaticamente.
+- **Interface Dupla**: Use como uma ferramenta de linha de comando (CLI) ou como uma biblioteca Python.
+- **Roteamento Inteligente**: Seleção automática da melhor habilidade para a tarefa.
+- **Extensível**: Suporta funções locais, chamadas de API e delegação de LLM.
+
+## 🚀 Instalação
+
+1. Clone o repositório.
+2. Crie um ambiente virtual:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   ```
+3. Instale as dependências:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## 💻 Uso
+
+### Como CLI
+
+Inicie o chat interativo:
+```bash
+python main.py chat
+```
+
+Liste as habilidades instaladas:
+```bash
+python main.py list-skills
+```
+
+### Como Biblioteca
+
+```python
+from api import GlobalAgent
+
+agent = GlobalAgent()
+response = agent.ask("Quanto é 15 * 25?")
+print(response["result"])
+```
+
+## 🧩 Adicionando Novas Habilidades (Plugins)
+
+Para adicionar uma nova habilidade, basta criar um arquivo `.py` dentro da pasta `skills/` seguindo este modelo:
+
+```python
+from core.base_skill import BaseSkill
+
+class MyNewSkill(BaseSkill):
+    @property
+    def name(self):
+        return "my_skill"
+
+    @property
+    def description(self):
+        return "Faz algo incrível que o LLM deve saber."
+
+    def execute(self, arguments):
+        return "Resultado do processamento"
+```
+
+O orquestrador fará o resto!
+# Global Agent Orchestrator
+
+> Um orquestrador de agentes modular e extensível em Python com descoberta automática de skills.
+
+## Metadata
+- **Language**: Python 3.10+
+- **Pattern**: Supervisor / Plugin-based
+- **Logic**: LLM-driven skill selection via JSON contracts.
+
+## Core Components
+- [core/base_skill.py]: Interface abstrata obrigatória para novas habilidades.
+- [core/discovery.py]: Motor de carregamento dinâmico de plugins.
+- [core/orchestrator.py]: Lógica central de decisão e execução.
+
+## Documentation
+- [README.md]: Guia geral para humanos e agentes.
+- [docs/ARCHITECTURE-AI.md]: Detalhes técnicos profundos para outros agentes.
+- [docs/SKILL_GUIDE.md]: Como estender o sistema criando novas habilidades.
+
+## Key Concepts
+- **Automatic Discovery**: Skills colocadas em `skills/` são carregadas em runtime.
+- **JSON Contracts**: O orquestrador espera respostas estruturadas para processar ferramentas.
+- **Short-term Memory**: Mantém histórico básico para contexto.
+# Architecture Guide for AI Agents
+
+Este documento é destinado a outros agentes de IA para entenderem como operar e estender o **Global Orchestrator**.
+
+## 🏗️ System Flow
+
+O sistema opera em um ciclo de **Classificação -> Seleção -> Execução**.
+
+```mermaid
+graph TD
+    A[User Input] --> B{Orchestrator}
+    B --> C[LLM Classification]
+    C --> D[Skill Discovery]
+    D --> E[Skill Execution]
+    E --> F[Result Synthesis]
+    F --> G[Final Response]
+```
+
+## 🧩 Modularity Contract
+
+Para estender o sistema, você deve implementar o contrato definido em `core/base_skill.py`.
+
+### BaseSkill Interface
+```python
+class BaseSkill(ABC):
+    @property
+    @abstractmethod
+    def name(self) -> str: ...
+    
+    @property
+    @abstractmethod
+    def description(self) -> str: ...
+    
+    @abstractmethod
+    def execute(self, arguments: Dict[str, Any]) -> Any: ...
+```
+
+## 📡 Communication Protocol (JSON)
+
+O Orquestrador utiliza prompts de sistema para forçar o LLM a responder em JSON. O esquema esperado é:
+
+```json
+{
+  "skill": "string",
+  "args": {
+    "key": "value"
+  },
+  "reasoning": "string explanation",
+  "response": "optional direct response if fallback"
+}
+```
+
+## 🧠 Memory Management
+
+O sistema suporta memória de curto prazo via `self.history` dentro da classe `GlobalOrchestrator`.
+- **Role**: `user` ou `assistant`.
+- **Format**: Lista de dicionários (padrão OpenAI Chat).
+
+## 💡 AI Hint for Extensions
+
+Ao criar uma nova skill, garanta que a `description` seja rica em **verbos de ação** e **contexto de uso**. O Orquestrador usa essa string como critério principal de roteamento.
+- **Bom**: "Executa consultas avançadas em bancos de dados SQL para extração de relatórios."
+- **Ruim**: "Skill de banco de dados."
+# Guide: Creating New Skills (AI-Friendly)
+
+Este guia explica como adicionar novas capacidades ao **Global Orchestrator**.
+
+## 1. O Padrão de Plugin
+
+O sistema utiliza reflexão (inspect) para encontrar classes. Qualquer classe que:
+1. Resida em um arquivo `.py` dentro de `skills/`.
+2. Herde de `BaseSkill`.
+3. Não seja a própria `BaseSkill`.
+
+Será carregada automaticamente no próximo boot do orquestrador.
+
+## 2. Definindo a Identidade da Skill
+
+O segredo para um roteamento perfeito está na propriedade `description`.
+
+```python
+@property
+def description(self) -> str:
+    return "Descrição rica em detalhes para o LLM."
+```
+
+### Dicas de Prompting para Descrição:
+- Liste os **parâmetros** que a skill espera.
+- Explique o **output** esperado.
+- Adicione **casos de uso** (ex: "Use esta skill quando o usuário pedir X").
+
+## 3. Tipos de Skills
+
+### A. Skill Local (Python)
+Executa código Python diretamente. Ideal para manipulação de arquivos ou lógica local.
+
+### B. Skill de API (Externa)
+Atua como um proxy para um serviço SaaS. Requer chaves de API no `.env`.
+
+### C. Skill de Delegação (LLM)
+Encaminha a tarefa para outro modelo ou com um prompt de sistema diferente.
+
+## 4. Exemplo de Implementação
+
+```python
+from core.base_skill import BaseSkill
+
+class SearchSkill(BaseSkill):
+    @property
+    def name(self):
+        return "web_search"
+
+    @property
+    def description(self):
+        return "Busca informações em tempo real na internet. Parâmetros: query (o termo de busca)."
+
+    def execute(self, arguments):
+        query = arguments.get("query")
+        # Lógica de busca aqui
+        return f"Resultados para {query}..."
+```
+
+## 5. Validação
+Após criar sua skill, rode `python main.py list-skills` no terminal para confirmar que ela foi descoberta.

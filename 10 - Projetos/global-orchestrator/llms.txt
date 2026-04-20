@@ -1,0 +1,23 @@
+# Global Agent Orchestrator
+
+> Um orquestrador de agentes modular e extensível em Python com descoberta automática de skills.
+
+## Metadata
+- **Language**: Python 3.10+
+- **Pattern**: Supervisor / Plugin-based
+- **Logic**: LLM-driven skill selection via JSON contracts.
+
+## Core Components
+- [core/base_skill.py]: Interface abstrata obrigatória para novas habilidades.
+- [core/discovery.py]: Motor de carregamento dinâmico de plugins.
+- [core/orchestrator.py]: Lógica central de decisão e execução.
+
+## Documentation
+- [README.md]: Guia geral para humanos e agentes.
+- [docs/ARCHITECTURE-AI.md]: Detalhes técnicos profundos para outros agentes.
+- [docs/SKILL_GUIDE.md]: Como estender o sistema criando novas habilidades.
+
+## Key Concepts
+- **Automatic Discovery**: Skills colocadas em `skills/` são carregadas em runtime.
+- **JSON Contracts**: O orquestrador espera respostas estruturadas para processar ferramentas.
+- **Short-term Memory**: Mantém histórico básico para contexto.

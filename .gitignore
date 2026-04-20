@@ -1,0 +1,32 @@
+# Obsidian / workspace
+.obsidian/
+.makemd/
+.smart-env/
+.space/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.venv/
+venv/
+
+# Local agent / generated artifacts
+.agent/brain/.venv/
+.agent/brain/__pycache__/
+.agent/brain.db-shm
+.agent/brain.db-wal
+.agent/brain/*.pyc
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Optional heavy/generated content
+node_modules/
+dist/
+build/

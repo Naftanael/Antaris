@@ -1,0 +1,5 @@
+typer[all]
+rich
+pydantic
+python-dotenv
+# openai  # Descomente para integrar um modelo real
