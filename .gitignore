@@ -19,6 +19,18 @@ venv/
 .agent/brain.db-shm
 .agent/brain.db-wal
 .agent/brain/*.pyc
+.agent/mcp_config.json
+.agent/brain.db
+.agent/vault-index.json
+.agent/context-manifest.md
+.agent/memory/
+.agent/workflows/
+.agent/agents/
+.agent/skills/
+.agent/rules/
+.agent/scripts/
+.agent/.shared/**/__pycache__/
+.agent/.shared/**/*.pyc
 
 # OS / editor
 .DS_Store
