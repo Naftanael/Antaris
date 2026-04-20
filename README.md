@@ -122,7 +122,7 @@ O repositorio contem material voltado a agentes de IA, incluindo:
 
 ## Licenca
 
-Ainda nao definida.
+MIT. Veja [`LICENSE`](./LICENSE).
 
 ## Autor
 
