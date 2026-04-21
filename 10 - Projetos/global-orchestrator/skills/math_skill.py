@@ -1,7 +1,9 @@
 from core.base_skill import BaseSkill
+from core.debug.events import EventLevel
 import ast
 import operator as op
 import statistics
+import time
 from typing import Any, Dict
 
 class MathSkill(BaseSkill):
@@ -35,14 +37,56 @@ class MathSkill(BaseSkill):
 
     def execute(self, arguments: Dict[str, Any]) -> Any:
         expression = arguments.get("expression", "").strip()
-        if not expression: return "Nenhuma expressão fornecida."
+        start = time.perf_counter()
+        preview = expression[:120]
+        self.trace_event(
+            "skill_execution_started",
+            level=EventLevel.INFO,
+            payload={
+                "skill_name": self.name,
+                "expression_preview": preview,
+                "expression_length": len(expression),
+            },
+        )
+        if not expression:
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            self.trace_event(
+                "skill_execution_finished",
+                level=EventLevel.INFO,
+                payload={
+                    "skill_name": self.name,
+                    "status": "empty_input",
+                    "duration_ms": duration_ms,
+                },
+            )
+            return "Nenhuma expressão fornecida."
         
         try:
             # Substitui termos comuns para o parser
             expression = expression.replace("average", "mean")
             node = ast.parse(expression, mode='eval').body
             result = self._safe_eval(node)
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            self.trace_event(
+                "skill_execution_finished",
+                level=EventLevel.INFO,
+                payload={
+                    "skill_name": self.name,
+                    "status": "success",
+                    "duration_ms": duration_ms,
+                },
+            )
             return f"Resultado: {result}"
         except Exception as e:
+            duration_ms = round((time.perf_counter() - start) * 1000, 3)
+            self.trace_event(
+                "skill_execution_error",
+                level=EventLevel.ERROR,
+                payload={
+                    "skill_name": self.name,
+                    "duration_ms": duration_ms,
+                    "error_type": type(e).__name__,
+                    "error": str(e)[:200],
+                },
+            )
             return f"Erro na execução rápida: {str(e)}"
-
