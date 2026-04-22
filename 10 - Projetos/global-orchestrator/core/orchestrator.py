@@ -233,6 +233,45 @@ REGRAS:
                 "args": {"expression": message},
                 "reasoning": "O usuário solicitou um cálculo matemático."
             }
+        elif any(
+            term in msg
+            for term in [
+                "jarvis",
+                "frontend",
+                "interface",
+                "pagina",
+                "página",
+                "tela",
+                "layout",
+                "componente",
+            ]
+        ) or re.search(r"\\bui\\b", msg):
+            action = "pipeline"
+            if any(term in msg for term in ["review", "revis", "avali"]):
+                action = "review"
+            elif any(term in msg for term in ["playwright", "axe", "snapshot", "teste visual", "testar", "teste"]):
+                action = "test"
+            elif any(term in msg for term in ["gerar", "generate", "criar", "build"]):
+                action = "generate"
+
+            prompt = self._extract_query_after_keywords(
+                message,
+                ["gerar", "generate", "criar", "build", "pagina", "página", "tela", "frontend", "interface"],
+            )
+
+            args: Dict[str, Any] = {"action": action}
+            if action in {"generate", "pipeline"} and prompt:
+                args["prompt"] = prompt
+            if "baseline" in msg and any(term in msg for term in ["atualiz", "update", "renovar"]):
+                args["update_baseline"] = True
+            if "strict snapshot" in msg:
+                args["strict_snapshots"] = True
+
+            return {
+                "skill": "jarvis_frontend_skill",
+                "args": args,
+                "reasoning": "O usuário está pedindo geração/validação de frontend no pipeline Jarvis.",
+            }
         elif "listar" in msg or "arquivos" in msg:
             return {
                 "skill": "shell_skill",

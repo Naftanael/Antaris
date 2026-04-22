@@ -1,0 +1,27 @@
+{
+  "name": "jarvis-frontend-generation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-registry": "tsx tools/build-registry.ts",
+    "generate-page": "tsx tools/generate-page.ts",
+    "install-browsers": "playwright install chromium",
+    "review-page": "tsx tools/review-page.ts",
+    "test-page": "tsx tools/test-page.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.54.2",
+    "pngjs": "^7.0.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

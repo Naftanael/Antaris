@@ -1,0 +1,38 @@
+{
+  "pageId": "agent-telemetry-dashboard",
+  "pageType": "dashboard",
+  "stylePreset": "technical-dark",
+  "layout": {
+    "sidebar": true,
+    "header": true,
+    "maxWidth": "full",
+    "density": "medium"
+  },
+  "sections": [
+    {
+      "id": "top-metrics",
+      "type": "metrics-row",
+      "components": [
+        { "type": "metric-card", "label": "Agents Active", "dataKey": "agents.active" },
+        { "type": "metric-card", "label": "Tasks Running", "dataKey": "tasks.running" },
+        { "type": "metric-card", "label": "CPU", "dataKey": "system.cpu" },
+        { "type": "metric-card", "label": "Memory", "dataKey": "system.memory" }
+      ]
+    },
+    {
+      "id": "main-tabs",
+      "type": "tabs-section",
+      "tabs": ["Overview", "Agents", "Logs", "Network"]
+    },
+    {
+      "id": "event-feed",
+      "type": "activity-feed",
+      "dataKey": "events.recent"
+    }
+  ],
+  "states": ["loading", "empty", "error"],
+  "actions": [
+    { "id": "refresh", "label": "Atualizar", "variant": "default" },
+    { "id": "export", "label": "Exportar", "variant": "secondary" }
+  ]
+}
