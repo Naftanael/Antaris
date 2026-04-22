@@ -9,6 +9,7 @@ Um orquestrador de agentes modular e extensível construído em Python. Ele util
 - **Roteamento Inteligente**: Seleção automática da melhor habilidade para a tarefa.
 - **Extensível**: Suporta funções locais, chamadas de API e delegação de LLM.
 - **Integração com o vault Antaris**: Consulta bootstrap, busca em notas e brain local via `antaris_vault_skill`.
+- **Integração com pipeline Jarvis**: Geração e validação de frontend via `jarvis_frontend_skill` (generate/review/test).
 - **Cliente Gemini opcional**: Se `GOOGLE_GENAI_API_KEY` estiver configurado, o roteamento deixa de ser apenas heurístico.
 
 ## 🚀 Instalação
@@ -36,6 +37,7 @@ python main.py chat
 Faça uma pergunta unica:
 ```bash
 python main.py ask "buscar notas recentes do vault"
+python main.py ask "jarvis gerar frontend dashboard de metricas"
 ```
 
 Liste as habilidades instaladas:
@@ -133,3 +135,16 @@ Variáveis opcionais:
 
 - `GOOGLE_GENAI_API_KEY`
 - `GOOGLE_GENAI_MODEL`
+
+## Testes relevantes
+
+Para validar a integracao atual do orquestrador com o vault e com a unificacao `Hermes` + `Antaris`:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+Cobertura importante:
+- `tests/test_orchestrator_vault_routing.py`
+- `tests/test_orchestrator_jarvis_routing.py`
+- `tests/test_antaris_hermes_unification.py`

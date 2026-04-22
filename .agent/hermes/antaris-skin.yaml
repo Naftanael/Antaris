@@ -1,0 +1,59 @@
+name: antaris
+description: Antaris identity - obsidian black, deep blue, and signal amber
+
+colors:
+  banner_border: "#1f3a5f"
+  banner_title: "#f4c95d"
+  banner_accent: "#5bc0eb"
+  banner_dim: "#5c677d"
+  banner_text: "#e6edf3"
+  ui_accent: "#5bc0eb"
+  ui_label: "#f4c95d"
+  ui_ok: "#59c9a5"
+  ui_error: "#ef6f6c"
+  ui_warn: "#f4a259"
+  prompt: "#e6edf3"
+  input_rule: "#1f3a5f"
+  response_border: "#5bc0eb"
+  session_label: "#f4c95d"
+  session_border: "#5c677d"
+  status_bar_bg: "#0b1020"
+  voice_status_bg: "#0b1020"
+  completion_menu_bg: "#0b1020"
+  completion_menu_current_bg: "#17324d"
+  completion_menu_meta_bg: "#0b1020"
+  completion_menu_meta_current_bg: "#17324d"
+
+spinner:
+  thinking_verbs:
+    - "curating context"
+    - "indexing signals"
+    - "aligning memory"
+    - "routing intent"
+  wings:
+    - ["[", "]"]
+    - ["<", ">"]
+
+branding:
+  agent_name: "Antaris"
+  welcome: "Antaris online. Vault conectado, contexto carregado."
+  goodbye: "Antaris offline."
+  response_label: " [ Antaris ] "
+  prompt_symbol: "A> "
+  help_header: "[Antaris] Available Commands"
+
+tool_prefix: "|"
+
+banner_logo: |
+  [bold #f4c95d]    ___        __            _      [/]
+  [bold #5bc0eb]   /   | _____/ /_____ _____(_)____ [/]
+  [bold #5bc0eb]  / /| |/ ___/ __/ __ `/ __/ / ___/ [/]
+  [bold #5bc0eb] / ___ / /  / /_/ /_/ / /_/ (__  )  [/]
+  [bold #5bc0eb]/_/  |_/_/   \__/\__,_/\__/_/____/   [/]
+
+banner_hero: |
+  [#5bc0eb]           .        *           .        [/]
+  [#5bc0eb]      *         .       .            *  [/]
+  [#f4c95d]                 ANTARIS                 [/]
+  [#5c677d]      vault + memory + runtime control   [/]
+  [#5bc0eb]   .           *       .          *      [/]

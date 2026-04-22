@@ -13,13 +13,14 @@ Default output: ~/.hermes/antaris_prefill.jsonl
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 AGENT_DIR = REPO_ROOT / ".agent"
 MEMORY_DIR = AGENT_DIR / "memory"
-HERMES_HOME = Path.home() / ".hermes"
+HERMES_HOME = Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes")).expanduser()
 DEFAULT_OUTPUT = HERMES_HOME / "antaris_prefill.jsonl"
 
 
@@ -38,7 +39,7 @@ def build_context() -> str:
 
     # Identity
     sections.append(
-        "Voce e Antaris, operando sobre o Hermes runtime. "
+        "Voce e Antaris, o agente operacional. "
         "Vault Obsidian: /home/antaris/Documentos/Antaris. "
         "Responda em pt-BR, seja direto."
     )

@@ -85,6 +85,14 @@ Capacidades do brain:
 Observacao:
 alguns componentes locais de agente/infra podem estar fora do versionamento principal dependendo da configuracao do repositorio.
 
+### 5. Subprojetos ativos do workspace
+O vault nao e apenas documentacao. Ele ancora um workspace tecnico com componentes executaveis que compartilham contexto:
+
+- `.agent/`: camada operacional com integracoes locais, hub de comandos, brain, Gemini MCP e unificacao Hermes + Antaris
+- `10 - Projetos/global-orchestrator/`: orquestrador Python com descoberta de skills, tracing e integracao direta com o vault
+- `10 - Projetos/jarvis/`: pipeline TypeScript para gerar, revisar e testar frontends de forma deterministica
+- `10 - Projetos/hermes-webui/`: checkout tecnico opcional da Web UI do runtime Hermes quando essa superficie fizer parte do workspace local
+
 ## Casos de uso
 
 - segundo cerebro para engenharia e pesquisa
@@ -97,6 +105,54 @@ alguns componentes locais de agente/infra podem estar fora do versionamento prin
 
 ### Navegar pelo vault
 Abra o repositorio como vault no Obsidian ou leia os arquivos Markdown diretamente.
+
+### Operar as integracoes
+Existe agora um hub unico para as integracoes do Antigravity:
+
+```bash
+python3 .agent/scripts/antigravity_hub.py doctor
+python3 .agent/scripts/antigravity_hub.py unify-hermes
+python3 .agent/scripts/antigravity_hub.py bootstrap
+python3 .agent/scripts/antigravity_hub.py search "persona arquiteto" --limit 5
+python3 .agent/scripts/antigravity_hub.py brain-query "persona arquiteto" --mode hybrid --limit 5
+python3 .agent/scripts/antigravity_hub.py setup-mcp
+```
+
+O guia rapido das integracoes esta em:
+- `.agent/INTEGRATIONS.md`
+
+### Runtime Hermes + identidade Antaris
+
+O runtime local continua sendo `Hermes`, enquanto `Antaris` define a identidade, o contexto do vault e o launcher `antaris`.
+
+Documentacao principal:
+- `.agent/hermes/README.md`
+- `hermes-skin-setup.md`
+- `00 - Sistema/Hermes-Antaris-Unificacao.md`
+
+### Operar os subprojetos ativos
+
+Orquestrador:
+
+```bash
+cd "10 - Projetos/global-orchestrator"
+python3 main.py list-skills
+python3 main.py ask "buscar notas recentes do vault"
+```
+
+Pipeline Jarvis:
+
+```bash
+cd "10 - Projetos/jarvis"
+npm run generate-page -- --prompt "dashboard de telemetria de agentes"
+npm run review-page -- --page .artifacts/pages/<id>/generated-page.tsx
+```
+
+### Notas de versionamento local
+
+- `brain.db`, `vault-index.json` e `context-manifest.md` sao artefatos locais de runtime e nao sao a fonte canonica do projeto
+- alguns projetos dentro de `10 - Projetos/` podem manter historico Git proprio quando forem integracoes externas ou checkouts tecnicos opcionais
+- a documentacao de alto nivel do workspace deve continuar na raiz, mesmo quando o codigo vive em subdiretorios especializados
 
 ### Pontos de entrada recomendados
 - `CODEBASE.md`

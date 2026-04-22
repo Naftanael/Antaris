@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import sys
 import textwrap
 import uuid
 from collections import defaultdict
@@ -288,9 +289,23 @@ def run_query(
         if mode == "lexical":
             hits = lexical_search(conn, query, limit=limit)
         elif mode == "semantic":
-            hits = semantic_search(conn, query, limit=limit, model_name=model_name)
+            try:
+                hits = semantic_search(conn, query, limit=limit, model_name=model_name)
+            except ModuleNotFoundError as exc:
+                print(
+                    f"warning: semantic search unavailable ({exc}); falling back to lexical mode",
+                    file=sys.stderr,
+                )
+                hits = lexical_search(conn, query, limit=limit)
         elif mode == "hybrid":
-            hits = hybrid_search(conn, query, limit=limit, model_name=model_name)
+            try:
+                hits = hybrid_search(conn, query, limit=limit, model_name=model_name)
+            except ModuleNotFoundError as exc:
+                print(
+                    f"warning: hybrid search unavailable ({exc}); falling back to lexical mode",
+                    file=sys.stderr,
+                )
+                hits = lexical_search(conn, query, limit=limit)
         else:
             raise ValueError(f"unsupported mode: {mode}")
 

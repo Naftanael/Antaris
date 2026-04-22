@@ -18,6 +18,9 @@ venv/
 .agent/brain/__pycache__/
 .agent/brain.db-shm
 .agent/brain.db-wal
+.agent/brain/brain.db
+.agent/brain/brain.db-shm
+.agent/brain/brain.db-wal
 .agent/brain/*.pyc
 .agent/mcp_config.json
 .agent/brain.db
